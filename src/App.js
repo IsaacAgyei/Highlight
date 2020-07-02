@@ -1,26 +1,49 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Twitter from './components/Twitter'
+import Instagram from './components/Instagram'
+import YoutubeSearchBar from './components/YoutubeComponents/YoutubeSearchBar'
+import {Grid, Paper} from '@material-ui/core'
+import {makeStyles} from '@material-ui/core/styles'
 
-function App() {
+
+const useStyles = makeStyles({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    height:'600px',
+    padding: '10px',
+    overflow: 'auto',
+  },
+  grid: {
+    direction: 'row',
+    justify: 'space-evenly',
+    alignItems:'center'
+  }
+})
+
+export default function App() {
+  const classes = useStyles()
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={classes.root}>
+      <Grid container className={classes.grid}spacing={6}>
+        <Grid item xs={12}>
+          <Paper></Paper>
+        </Grid>
+        <Grid item xs={6}>
+          <Paper className={classes.paper}><Instagram/></Paper>
+        </Grid>
+        <Grid item xs={6}>
+          <Paper className={classes.paper}><Twitter/></Paper>
+        </Grid>
+        <Grid item xs={12}>
+          <Paper></Paper>
+        </Grid>
+      </Grid>
+      <Grid container className={classes.root} spacing={0}>
+        <YoutubeSearchBar/>
+      </Grid>
     </div>
-  );
-}
-
-export default App;
+  )
+};
