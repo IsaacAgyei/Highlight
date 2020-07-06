@@ -5,7 +5,7 @@ productionCall.txt
 
 
 # apis
-/src/components/YoutubeComponents/apis
+/src/components/youtubecomponents/apis
 
 # dependencies
 /node_modules
