@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import {Grid, Button} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
-import {API_KEY, axiosCreate} from '../apis/youtube'
+import {API_KEY, axiosCreate} from './apis/youtube'
 import VideoDetail from './VideoDetail'
 import VideoList from './VideoList'
 
@@ -76,10 +76,10 @@ function SearchBar() {
       </React.Fragment>
       <React.Fragment>
         <Grid container direction="row" justify="flex-start" className={classes.root} spacing={2}>
-          <Grid item xs={0}>
+          <Grid item>
             <VideoDetail clickedVideo={selectedVideo}/>
           </Grid>
-          <Grid item xs={0}>
+          <Grid item>
             <VideoList videoWasSelected={onVideoSelect} videoInList={videos}/>
           </Grid>
         </Grid>
