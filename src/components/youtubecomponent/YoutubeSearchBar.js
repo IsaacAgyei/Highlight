@@ -43,7 +43,7 @@ function SearchBar() {
       params: {
         key: process.env.YOUTUBE_API_KEY,
         part:'snippet',
-        maxResults: 5,
+        maxResults: 1,
         q: searchTerm,
         type: 'video'
       }

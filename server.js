@@ -1,11 +1,10 @@
 const {createServer} = require('http')
+require('dotenv').config()
 const express = require('express')
 const compression = require('compression')
 const morgan = require('morgan')
 const path = require('path')
-const { normalize } = require('path')
 const Twit = require('twit')
-const Twitter = require('twitter')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 
@@ -46,13 +45,11 @@ let T = new Twit ({
 app.post('/', (req, res) => {
   let screenName = req.body.userName
   let arrayUserData = []
-  if (screenName !== "" || screenName !== undefined) {
-    T.get('users/search', {q: screenName, page: 1, count: 20}, function(err, data, response) {
-      data.map(users => arrayUserData.push(users))
-      console.log(arrayUserData)
-      res.send(arrayUserData)
-    })
-  }
+  T.get('users/search', {q: screenName, page: 1, count: 20}, function(err, tweets, response) {
+    tweets.map(users => arrayUserData.push(users))
+    console.log(arrayUserData)
+    res.send(arrayUserData)
+  })
 })
 
 const server = createServer(app)
