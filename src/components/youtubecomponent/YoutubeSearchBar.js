@@ -41,7 +41,7 @@ function SearchBar() {
   async function handleClick() {
     const response = await axiosCreate.get('/search',{
       params: {
-        key: "AIzaSyAt1fTSNMRg-Yj-hay_zCqcfVXefcpi-qY",//process.env.YOUTUBE_API_KEY,
+        key: process.env.YOUTUBE_API_KEY,
         part:'snippet',
         maxResults: 5,
         q: searchTerm,
