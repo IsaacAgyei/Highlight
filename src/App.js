@@ -1,9 +1,8 @@
 import React from 'react';
-import Twitter from './components/Twitter'
-import Instagram from './components/Instagram'
+import TwitterSearchBar from './components/twittercomponent/TwitterSearchBar'
 import YoutubeSearchBar from './components/youtubecomponent/YoutubeSearchBar'
-import {Grid, Paper} from '@material-ui/core'
-import {makeStyles} from '@material-ui/core/styles'
+import { Grid } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
 
 
 const useStyles = makeStyles({
@@ -11,14 +10,13 @@ const useStyles = makeStyles({
     flexGrow: 1,
   },
   paper: {
-    height:'600px',
     padding: '10px',
     overflow: 'auto',
   },
   grid: {
     direction: 'row',
-    justify: 'space-evenly',
-    alignItems:'center'
+    justify: 'space-around',
+    alignItems:'flex-start'
   }
 })
 
@@ -27,22 +25,15 @@ export default function App() {
 
   return (
     <div className={classes.root}>
-      <Grid container className={classes.grid}spacing={6}>
-        <Grid item xs={12}>
-          <Paper></Paper>
-        </Grid>
-        <Grid item xs={6}>
-          <Paper className={classes.paper}><Instagram/></Paper>
-        </Grid>
-        <Grid item xs={6}>
-          <Paper className={classes.paper}><Twitter/></Paper>
-        </Grid>
-        <Grid item xs={12}>
-          <Paper></Paper>
+      <Grid container className={classes.grid}>
+        <Grid item className={classes.root} xs={12}>
+          <YoutubeSearchBar/>
         </Grid>
       </Grid>
-      <Grid container className={classes.root} spacing={0}>
-        <YoutubeSearchBar/>
+      <Grid container className={classes.grid}>
+        <Grid item className={classes.root}xs={12}>
+          <TwitterSearchBar/>
+        </Grid>
       </Grid>
     </div>
   )

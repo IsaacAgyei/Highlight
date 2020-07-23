@@ -1,33 +1,89 @@
-import React from 'react'
+import React, { useState } from 'react';
+import { Grid, Button, Box, GridList } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles';
+import TwitterList from './TwitterList'
 import axios from 'axios'
+import TwitterDetail from './TwitterDetail';
+
+const useStyles = makeStyles( () => ({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-even',
+    overflow: 'hidden',
+    backgroundColor: '#cbfafa'
+  },
+  gridList: {
+    width: 200,
+    height: 500,
+  },
+  searchBarDimensions: {
+    height: '45px',
+    fontSize: '35px',
+    display: 'flex',
+  },
+  searchButtonDimensions: {
+    height: '50px',
+    display: 'flex',
+  },
+}));
 
 
 function TwitterSearchBar() {
-  const twitterUsers = axios.create({
-    baseURL: "https://api.twitter.com/1.1/users/search.json"
-  })
+  const classes = useStyles()
+  const [searchTerm, setSearchTerm] = useState('')
+  const [userList, setUserList] = useState([])
 
-  let users = twitterUsers.get("https://api.twitter.com/1.1/users/search.json", {
-    params: {
-      q: "Drake",
-      page: 1,
-      count: 10,
-      include_entities: false,
-      key: process.env.TWITTER_API_KEY
-    }
-  })
-  .then(res => {
-    console.log(res)
-  })
-  .catch(err => {
-    console.log(err)
-  })
+  const [selectedProfile, setselectedProfile] = useState(null)
+
+  const handleChange = (event) => setSearchTerm(event.target.value)
+  const onProfileSelect = (profile) => setselectedProfile(profile)
+
+  function handleClick() {
+    axios.post('http://localhost:5000/', {
+      userName: searchTerm
+    })
+    .then(res => {
+      setUserList(res.data.map(users => users))
+      setselectedProfile(res.data[0])
+      })
+    .catch(err => {
+      console.log(err)
+    })
+  }
 
   return (
-    <div>
-      <p>{users}</p>
-    </div>
+    <div className="App">
+      <Grid container className={classes.root}>
+          <Grid item>
+            {<input 
+              className={classes.searchBarDimensions}
+              type='text' 
+              value={searchTerm} 
+              placeholder='Search Twitter...'
+              onChange={handleChange}
+            />}
+          </Grid>
+          <Grid item>
+             <Button 
+              className={classes.searchButtonDimensions}
+              color='secondary' 
+              variant='contained' 
+              onClick={handleClick}>Search</Button>
+          </Grid>
+        </Grid>
+      <Grid container className={classes.root}>
+        <Grid item xs={5}>
+          <TwitterDetail clickedProfile={selectedProfile}/>
+        </Grid>
+        <Box ml={1}>
+          <GridList className={classes.gridList}> 
+            <TwitterList profileWasSelected={onProfileSelect} profilesInList={userList} />
+          </GridList>
+        </Box> 
+      </Grid>
+  </div>
   )
 }
 
-export default TwitterSearchBar
+export default TwitterSearchBar;

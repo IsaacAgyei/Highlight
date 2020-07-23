@@ -5,23 +5,23 @@ import image from "../assets/studiojq2015_explore_web.jpg"
 const VideoDetail = ({clickedVideo}) => {
   const useStyles = makeStyles({
     videoPlayerDimensions: {
-      width:'800px',
-      height: '400px',
+      width:'580px',
+      height: '450px',
     }
   })
   const classes = useStyles()
   
-  if(!clickedVideo) return <div><img alt='video loading' src={image}/></div>
+  if(!clickedVideo) return <div><img alt='video loading' width={600} src={image}/></div>
   const videoSrc = `http://www.youtube.com/embed/${clickedVideo.id.videoId}`
 
   return (
-    <React.Fragment>
+    <div>
         <iframe className={classes.videoPlayerDimensions}
           frameBorder='0' 
           title='Video Player'
           src={videoSrc}
         />
-    </React.Fragment>
+    </div>
   )
 }
 export default VideoDetail

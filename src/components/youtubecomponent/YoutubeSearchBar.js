@@ -1,16 +1,21 @@
-import React,{useState} from 'react'
-import {Grid, Button} from '@material-ui/core'
-import {makeStyles} from '@material-ui/core/styles'
-import {axiosCreate} from './apis/youtube.js'
+import React,{ useState } from 'react'
+import { Grid, Button, Box, GridList } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
+import { axiosCreate } from './apis/youtube.js'
 import VideoDetail from './VideoDetail'
 import VideoList from './VideoList'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(() => ({
   root: {
-    flexGrow: 1,
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+    overflow: 'hidden',
+    backgroundColor: '#f2f2f2'
   },
-  cardImageDimensions: {
-    maxWidth: '345px',
+  gridList: {
+    width: 200,
+    height: 450,
   },
   searchBarDimensions: {
     height: '45px',
@@ -21,11 +26,7 @@ const useStyles = makeStyles({
     height: '50px',
     display: 'flex',
   },
-  videoPlayerDimensions: {
-    width:'500px',
-    height: '400px',
-  }
-})
+}))
 
 function SearchBar() {
   const classes = useStyles()
@@ -40,9 +41,9 @@ function SearchBar() {
   async function handleClick() {
     const response = await axiosCreate.get('/search',{
       params: {
-        key: process.env.YOUTUBE_API_KEY,
+        key: "AIzaSyAt1fTSNMRg-Yj-hay_zCqcfVXefcpi-qY",//process.env.YOUTUBE_API_KEY,
         part:'snippet',
-        maxResults: 1,
+        maxResults: 5,
         q: searchTerm,
         type: 'video'
       }
@@ -53,15 +54,14 @@ function SearchBar() {
   }
 
   return (
-    <React.Fragment>
-      <React.Fragment>
-        <Grid container direction="row" justify="flex-start" alignItems="center" spacing={0}className={classes.root}>
+    <div>
+        <Grid container className={classes.root}>
           <Grid item>
             {<input 
               className={classes.searchBarDimensions}
               type='text' 
               value={searchTerm} 
-              placeholder='Search...'
+              placeholder='Search Youtube...'
               onChange={handleChange}
             />}
           </Grid>
@@ -69,22 +69,21 @@ function SearchBar() {
              <Button 
               className={classes.searchButtonDimensions}
               color='primary' 
-              variant='outlined' 
+              variant='contained' 
               onClick={handleClick}>Search</Button>
           </Grid>
         </Grid>
-      </React.Fragment>
-      <React.Fragment>
-        <Grid container direction="row" justify="flex-start" className={classes.root} spacing={2}>
+        <Grid container direction="row" justify="flex-start" className={classes.root}>
           <Grid item>
             <VideoDetail clickedVideo={selectedVideo}/>
           </Grid>
-          <Grid item>
-            <VideoList videoWasSelected={onVideoSelect} videoInList={videos}/>
-          </Grid>
+          <Box ml={1}>
+            <GridList className={classes.gridList}>
+              <VideoList videoWasSelected={onVideoSelect} videoInList={videos}/>
+            </GridList>
+          </Box>
         </Grid>
-      </React.Fragment>
-    </React.Fragment>
+    </div>
   )
 }
 export default SearchBar
