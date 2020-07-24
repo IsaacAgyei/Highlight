@@ -1,5 +1,6 @@
 const {createServer} = require('http')
 require('dotenv').config()
+const axios = require('axios')
 const express = require('express')
 const compression = require('compression')
 const morgan = require('morgan')
@@ -41,16 +42,58 @@ let T = new Twit ({
   access_token_secret: process.env.ACCESS_SECRET,
 })
 
+const axiosCreate = axios.create({
+  baseURL: "https://www.googleapis.com/youtube/v3/"
+})
+
 
 app.post('/', (req, res) => {
   let screenName = req.body.userName
+  let query = req.body.youtubeSearchQuery
   let arrayUserData = []
-  T.get('users/search', {q: screenName, page: 1, count: 20}, function(err, tweets, response) {
-    tweets.map(users => arrayUserData.push(users))
-    console.log(arrayUserData)
-    res.send(arrayUserData)
-  })
+  
+  if(query) {
+    axiosCreate.get('/search', {
+      params: {
+        key: process.env.YOUTUBE_API_KEY,
+        part:'snippet',
+        maxResults: 7,
+        q: query,
+        type: 'video'
+      }
+    })
+    .then(response => {
+      res.send(response.data)
+      console.log(response.data)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
+  
+  if (screenName) {
+    T.get('users/search', {q: screenName, page: 1, count: 20}, function(err, data, response) {
+      data.map(users => arrayUserData.push(users))
+      console.log(arrayUserData)
+      res.send(arrayUserData)
+    })
+  }
 })
+
+// app.post('/', (req, res) => {
+//   let query = req.body.youtubeSearchQuery
+
+//   axiosCreate.get('/search', {
+//     params: {
+//       key: process.env.YOUTUBE_API_KEY,
+//       part:'snippet',
+//       maxResults: 1,
+//       q: query,
+//       type: 'video'
+//     }
+//   })
+//   console.log(params['q'], "CAN YOU SEE THIS!?!?!?!?!")
+// })
 
 const server = createServer(app)
 

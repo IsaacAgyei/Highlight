@@ -22,7 +22,7 @@ const TwitterDetail = ({clickedProfile}) => {
                 screenName: JSON.parse(profileScreenName)
               }}
               options={{
-                height: '500'
+                height: '900'
               }}
             />
         </Grid>

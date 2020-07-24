@@ -1,11 +1,11 @@
 import React,{ useState } from 'react'
 import { Grid, Button, Box, GridList } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import { axiosCreate } from './apis/youtube.js'
+import axios from 'axios'
 import VideoDetail from './VideoDetail'
 import VideoList from './VideoList'
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles( () => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -38,19 +38,17 @@ function SearchBar() {
   const handleChange = (event) => setSearchTerm(event.target.value)
   const onVideoSelect = (video) => setSelectedVideos(video)
 
-  async function handleClick() {
-    const response = await axiosCreate.get('/search',{
-      params: {
-        key: process.env.YOUTUBE_API_KEY,
-        part:'snippet',
-        maxResults: 1,
-        q: searchTerm,
-        type: 'video'
-      }
+  function handleClick() {
+    axios.post('http://localhost:5000/', {
+      youtubeSearchQuery: searchTerm
     })
-    setVideo(response.data.items)
-    setSelectedVideos(response.data.items['0'])
-    console.log(response.data.items)
+    .then(res => {
+      setVideo(res.data.items.map(searches => searches))
+      setSelectedVideos(res.data.items['0'])
+      })
+    .catch(err => {
+      console.log(err)
+    })
   }
 
   return (
