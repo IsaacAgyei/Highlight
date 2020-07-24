@@ -80,21 +80,6 @@ app.post('/', (req, res) => {
   }
 })
 
-// app.post('/', (req, res) => {
-//   let query = req.body.youtubeSearchQuery
-
-//   axiosCreate.get('/search', {
-//     params: {
-//       key: process.env.YOUTUBE_API_KEY,
-//       part:'snippet',
-//       maxResults: 1,
-//       q: query,
-//       type: 'video'
-//     }
-//   })
-//   console.log(params['q'], "CAN YOU SEE THIS!?!?!?!?!")
-// })
-
 const server = createServer(app)
 
 server.listen(PORT, err => {
