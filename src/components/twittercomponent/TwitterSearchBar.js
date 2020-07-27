@@ -40,7 +40,7 @@ function TwitterSearchBar() {
   const onProfileSelect = (profile) => setselectedProfile(profile)
 
   function handleClick() {
-    axios.post('http://localhost:5000/', {
+    axios.post('https://sptlyt.herokuapp.com/', {
       userName: searchTerm
     })
     .then(res => {

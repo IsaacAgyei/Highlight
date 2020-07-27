@@ -39,7 +39,7 @@ function SearchBar() {
   const onVideoSelect = (video) => setSelectedVideos(video)
 
   function handleClick() {
-    axios.post('http://localhost:5000/', {
+    axios.post('https://sptlyt.herokuapp.com/', {
       youtubeSearchQuery: searchTerm
     })
     .then(res => {
