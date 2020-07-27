@@ -12,7 +12,7 @@ const VideoDetail = ({clickedVideo}) => {
   const classes = useStyles()
   
   if(!clickedVideo) return <div><img alt='video loading' width={600} src={image}/></div>
-  const videoSrc = `http://www.youtube.com/embed/${clickedVideo.id.videoId}`
+  const videoSrc = `https://www.youtube.com/embed/${clickedVideo.id.videoId}`
 
   return (
     <div>
