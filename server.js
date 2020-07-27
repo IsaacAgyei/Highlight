@@ -1,5 +1,5 @@
 const {createServer} = require('http')
-require('dotenv').config() // This may be causing ur app to fail in production
+require('dotenv').config()
 const axios = require('axios')
 const express = require('express')
 const compression = require('compression')
