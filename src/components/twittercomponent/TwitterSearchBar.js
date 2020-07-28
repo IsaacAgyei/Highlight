@@ -1,41 +1,16 @@
 import React, { useState } from 'react';
 import { Grid, Button, Box, GridList } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles';
+import { twitterStyles } from '../../style/TwitterStyles'
 import TwitterList from './TwitterList'
 import axios from 'axios'
 import TwitterDetail from './TwitterDetail';
 
-const useStyles = makeStyles( () => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-even',
-    overflow: 'hidden',
-    backgroundColor: '#cbfafa'
-  },
-  gridList: {
-    width: 200,
-    height: 500,
-  },
-  searchBarDimensions: {
-    height: '45px',
-    fontSize: '35px',
-    display: 'flex',
-  },
-  searchButtonDimensions: {
-    height: '50px',
-    display: 'flex',
-  },
-}));
-
 
 function TwitterSearchBar() {
-  const classes = useStyles()
+  const classes = twitterStyles()
   const [searchTerm, setSearchTerm] = useState('')
   const [userList, setUserList] = useState([])
-
   const [selectedProfile, setselectedProfile] = useState(null)
-
   const handleChange = (event) => setSearchTerm(event.target.value)
   const onProfileSelect = (profile) => setselectedProfile(profile)
 
